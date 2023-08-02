@@ -20,6 +20,10 @@
   height: 100%;
   object-fit: cover;
 }
+.typography_color{
+  /* background-color: red; */
+  color: #2f1b1b;
+}
 .spanColor{
   color: rgba(207, 14, 14, 0.852);
 }

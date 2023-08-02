@@ -24,7 +24,7 @@ function App() {
           // palette values for light mode
         myColor:{
           main: "#F6F9Fc"
-        }
+        },
         }
       : {
           // palette values for dark mode

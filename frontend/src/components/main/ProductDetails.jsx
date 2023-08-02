@@ -4,21 +4,14 @@ import { AddShoppingCart } from '@mui/icons-material';
 
 function ProductDetails({ clickedProduct }) {
 
-  const [alignment, setAlignment] = useState('left');
 
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
-    }
-  };
-  console.log(clickedProduct);
+
 
   const [selectedImage, setselectedImage] =useState(0)
 
   return (
-    <div>
+    <>
       <Box
-      
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -26,8 +19,7 @@ function ProductDetails({ clickedProduct }) {
           gap: 2.5, p: 1.5
         }}
       >
-{/* image={`http://localhost:1337${item.attributes.image.data[0].attributes.url}`}
- */}
+
         <Box sx={{ display: 'flex' }}>
           <img
             width={400}
@@ -52,7 +44,7 @@ function ProductDetails({ clickedProduct }) {
 <ToggleButtonGroup
   value={selectedImage}
   exclusive
-  onChange={handleAlignment}
+  
   sx={{
     ".Mui-selected": { opacity: "1" }
   }}
@@ -85,7 +77,7 @@ function ProductDetails({ clickedProduct }) {
           </Button>
         </Box>
       </Box>
-    </div>
+    </>
   );
 }
 

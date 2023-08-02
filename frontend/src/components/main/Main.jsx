@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ProductDetails from './ProductDetails';
 import {useGetproductByNameQuery} from '../redux/product'
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { AnimatePresence, motion } from "framer-motion"
 
 function Main() {
 
@@ -66,12 +66,7 @@ function Main() {
       </Container>
     )
   }
-
- 
-  // data.data.attributes.image.data.attributes.url
-  // filter men: http://localhost:1337/api/products?populate=*&filters[category][$eq]=men
-  // filter women: http://localhost:1337/api/products?populate=*&filters[category][$eq]=women
-
+  
   if(data){
     return (
       <Container sx={{ mt: 6 }}>
@@ -110,9 +105,16 @@ function Main() {
         <Stack direction={'row'} flexWrap={'wrap'}
         justifyContent={'space-between'}      
         >
+    <AnimatePresence> 
          {data.data.map((item) => {
            return(
-            <Card key={item.id} sx={{ maxWidth: 333, mt: 6 , ":hover .MuiCardMedia-root": { scale: '1.1', transition: '3s', rotate: '1deg' } }}>
+            <Card 
+            component={motion.section}
+            layout
+            initial={{ transform: "scale(0)" }}
+            animate={{ transform: "scale(1)" }}
+            transition={{ duration: .7, type: "spring", stiffness: 50 }}
+            key={item.id} sx={{ maxWidth: 333, mt: 6 , ":hover .MuiCardMedia-root": { scale: '1.1', transition: '3s', rotate: '1deg' } }}>
             <CardMedia
               component="img"
               alt="green iguana"
@@ -147,8 +149,9 @@ function Main() {
             </CardActions>
             </Card>
            )
-         }
-         )}
+          }
+          )}
+    </AnimatePresence>
       
   
       

@@ -44,20 +44,23 @@ function Hero() {
                     top: "10%",
                     left: "10%",
                     textAlign: "left",
+        
+                      
                   }}
                 >
-                  <Typography sx={{
-                   color: them.palette.text.primary} }
+                  <Typography className="typography_color"
                    variant="h6">LIST LIFE COLLECTION</Typography>
-                  <Typography variant="h3">{item.text}</Typography>
-                  <Typography variant="h4">
+                  <Typography className="typography_color" variant="h3" sx={{mt: 1}}>
+                    {item.text}
+                    </Typography>
+                  <Typography className="typography_color" variant="h4"sx={{mt: 1}}>
                     SALE UP TO <span className="spanColor">30% OFF</span>
                   </Typography>
-                  <Typography variant="body1">
+                  <Typography className="typography_color" variant="body1" sx={{mt: 1}}>
                     get free shipping on orders over $99.00{" "}
                   </Typography>
-                  <Button variant="contained" sx={{ bgcolor: "#222", mt: 4 }}>
-                    SHP NOW
+                  <Button  variant="contained" sx={{mt: 3}}>
+                    SHOP NOW
                   </Button>
                 </Box>
               </SwiperSlide>
