@@ -1,5 +1,5 @@
 import { Box, Button, Container, Link, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React from "react";
 
 import imageHero from "../../images/banner-16.jpg";
 import imageHero2 from "../../images/banner-17.jpg";

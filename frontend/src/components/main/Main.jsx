@@ -7,6 +7,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
 import ProductDetails from './ProductDetails';
 import {useGetproductByNameQuery} from '../redux/product'
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 function Main() {
@@ -14,13 +15,18 @@ function Main() {
   const them = useTheme()
 
   const handleAlignment = (event, newValue) => {
-    setMyData(newValue)
+    if(newValue !== null){
+      setMyData(newValue)
+    }
+
   };
+
 
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+ 
   };
 
   const handleClose = () => {
@@ -37,17 +43,27 @@ function Main() {
       MyData
     )
 
+    const [ clickedProduct, setclickedProduct ] = useState({})
+
+
   if(isLoading){
     return(
-      <Container alignItems={"center"}>
-        <Typography variant='h6'> LOADING ....... </Typography>
+      <Container  >
+        <Stack sx={{ color: 'grey.500' , py: 11, justifyContent: "center"}} spacing={2} direction="row">
+            <CircularProgress color="secondary" />
+            <CircularProgress color="success" />
+            <CircularProgress color="inherit" />
+          </Stack>);
       </Container>
     )
   }
 
   if(error){
     return(
-      <Typography variant='h6'> {error} </Typography>
+      <Container sx={{ py: 11, textAlign: "center"}}>
+        <Typography variant='h6'> {error.error} </Typography>
+        <Typography variant='h6'> Please try again later </Typography>
+      </Container>
     )
   }
 
@@ -96,7 +112,7 @@ function Main() {
         >
          {data.data.map((item) => {
            return(
-            <Card key={item} sx={{ maxWidth: 333, mt: 6 , ":hover .MuiCardMedia-root": { scale: '1.1', transition: '3s', rotate: '1deg' } }}>
+            <Card key={item.id} sx={{ maxWidth: 333, mt: 6 , ":hover .MuiCardMedia-root": { scale: '1.1', transition: '3s', rotate: '1deg' } }}>
             <CardMedia
               component="img"
               alt="green iguana"
@@ -114,9 +130,15 @@ function Main() {
               </Typography>
       
              </CardContent>
+
              <CardActions sx={{  justifyContent:'space-between' }}>
               <Button 
-              onClick={handleClickOpen}
+              onClick={() => {
+             
+                  handleClickOpen()
+                  setclickedProduct(item)
+           
+              }}
               size="larg">
                   <AddShoppingCartIcon sx={{mr: 1}} fontSize='small' />
                   Add to cart
@@ -152,7 +174,7 @@ function Main() {
           <CloseIcon />
         </IconButton>
       
-       <ProductDetails />
+       <ProductDetails  clickedProduct={clickedProduct}  />
         
       </Dialog>
       </Container>

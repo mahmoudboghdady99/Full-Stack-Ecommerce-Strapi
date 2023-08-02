@@ -1,47 +1,92 @@
-import { AddShoppingCart } from '@mui/icons-material'
-import { Box, Button, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react';
+import { Box, Button, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { AddShoppingCart } from '@mui/icons-material';
 
-function ProductDetails() {
-    const image1 = 'https://th.bing.com/th?id=OIP.pXPYcCeogjMq6K_18Z2iSgHaJC&w=226&h=276&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2'
-    const image2 = "https://th.bing.com/th?id=OIP.Vl2O6MOza6BoGwFNzeASkwHaHa&w=249&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2"    
+function ProductDetails({ clickedProduct }) {
+
+  const [alignment, setAlignment] = useState('left');
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
+  console.log(clickedProduct);
+
+  const [selectedImage, setselectedImage] =useState(0)
+
   return (
     <div>
+      <Box
       
-      <Box sx={{display: "flex", alignItems: 'center',
-      flexDirection: { xs: "column", sm: "row" }
-    
-    }} gap={2.5}>
-          <Box sx={{display: 'flex'}}>
-          <img width={400} height={400} src='https://th.bing.com/th?id=OIP.c4MCiDFgSGLsR_7-4-j0PwHaEK&w=333&h=187&c=8&rs=1&qlt=30&o=6&pid=3.1&rm=2' alt='image' /> 
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2.5, p: 1.5
+        }}
+      >
+{/* image={`http://localhost:1337${item.attributes.image.data[0].attributes.url}`}
+ */}
+        <Box sx={{ display: 'flex' }}>
+          <img
+            width={400}
+            height={400}
+            src={`http://localhost:1337${clickedProduct.attributes.image.data[selectedImage].attributes.url } `}
+            alt='Product Image'
+          />
+        </Box>
+
+        <Box  sx={{ textAlign: { xs: 'center', sm: 'left' },  }}>
+          <Typography variant='h5'>{clickedProduct.attributes.title}</Typography>
+          <Typography variant='body1' my={0.4} fontSize={22} color='red'>
+            ${clickedProduct.attributes.price}
+          </Typography>
+          <Typography variant='body1'>{clickedProduct.attributes.description}</Typography>
+
+          <Box  direction='row' gap={3} sx={{ 
+            justifyContent: { xs: 'center', sm: 'left' },
+            p: 3, bgcolor: "#f6f6f6", my: 3
+            }}>
+
+<ToggleButtonGroup
+  value={selectedImage}
+  exclusive
+  onChange={handleAlignment}
+  sx={{
+    ".Mui-selected": { opacity: "1" }
+  }}
+>
+  {clickedProduct.attributes.image.data.map((item, index) => (
+    <ToggleButton
+     key={item.id} value={index} 
+    sx={{
+      width: "110px", height: "110px", p: '0', opacity: "0.5", mx: .5
+    }}
+     
+     >
+      <img
+        onClick={() => setselectedImage(index)}
+        style={{ borderRadius: 3, margin: '0 3px', cursor: "pointer" }}
+        width={'100%'}
+        height={'100%'}
+        src={`http://localhost:1337${item.attributes.url}`}
+        alt='image-product'
+      />
+    </ToggleButton>
+  ))}
+</ToggleButtonGroup>
+
           </Box>
 
-    <Box  sx={{ textAlign: { xs: "center", sm: "left" } }} >
-        <Typography variant='h5'> Women Fashion </Typography>
-        <Typography variant='body1' my={.4} fontSize={'22px'} color={'red'} > $ 12.99 </Typography>
-        <Typography variant='body1'>
-             This is the content of the dialog. 
-            Replace this with your actual content.
-        </Typography>
-  
-         <Stack direction={'row'} gap={1} my={2} sx={{ 
-          justifyContent: {xs: "center", sm: "left" } }}>
-         {["image1", "image2"].map((item) => {
-            return(
-    <img style={{ borderRadius: 3 }} key={item} width={90}   height={100} 
-  
-    src={eval(item)} alt='image' />
-                )
-            })}
-         </Stack>
-    <Button sx={{ mb: {xs: 1, sm: 0}}} variant='contained' > 
-        <AddShoppingCart sx={{mr: 1, fontSize: 'medium'}} /> 
-        Buy Now</Button>
-
-    </Box>
+          <Button sx={{ mb: { xs: 1, sm: 0 } }} variant='contained'>
+            <AddShoppingCart sx={{ mr: 1, fontSize: 'medium' }} />
+            Buy Now
+          </Button>
         </Box>
+      </Box>
     </div>
-  )
+  );
 }
 
-export default ProductDetails
+export default ProductDetails;
